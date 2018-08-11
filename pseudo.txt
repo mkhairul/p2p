@@ -1,0 +1,65 @@
+# ::Client::
+# if argv >= 4:
+# 	assign argv[1] to filename, argv[2] to HOST, argv[3] to PORT
+# else:
+# 	require  user input - filename, host, port
+#	if !host and !port : use default - 'localhost', 8578
+# if !filename: 
+#	abort process
+# execute function transfer(filename, host, port)
+# 
+# func transfer(string filename,string HOST, int PORT):
+#	create socket 
+#	connect socket to remote HOST
+#	if connection took > 120 seconds: 
+#		abort process
+#	send filesize to be transfered to remote HOST
+#	wait for acknowledgement
+#	send filename(strip '\' from filepath if exists) to remote HOST
+#	wait for acknowledgement
+#	compute file hash with MD5 using module filecheckmd5
+#	send file hash to remote HOST
+#	wait for acknowledgement
+#	set file chunkSize - 2048Bytes @ 2KB
+#	set file transfer timer
+#	set progress bar
+#	while fileSize > 0:
+#		try:
+#			read 2048 bytes from file
+#			send 2048 bytes to remote HOST
+#			filesize = filesize - 2048
+#			update progress bar
+#			wait for acknowledgement
+#			print progress bar
+#		except:
+#			abort process
+#	print Transfer Time
+#	close socket
+#
+#::Server::
+#	start function server()
+#		create socket
+#		bind PORT to socket
+#		listen to socket, listen queue size = 2
+#		while 1:
+#			if client connect assign handlersock = client socket obj, addr = client's address
+#			create new thread for func client(handlersock,addr)
+#	function client(handlersock, address)
+#		wait for client to send filesize
+#		send ack
+#		wait for client to send filename
+#		create file with filename
+#		send ack
+#		wait for client to send hash
+#		send ack
+#		set chunkSize to receive = 2048
+#		while filesize > 0
+#			wait for client to send chunk, assign chunk to data
+#			write data to filename
+#			filesize = filesize - chunkSize
+#			sent ack
+#		close filename
+#		check file hash, compare client hash with created file's hash using function filecheck(clienthash,filename)
+#		print Error or Success in comparing file hash
+#		close socket		
+	
